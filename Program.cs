@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Atv1Astrologia.Model;
+
 namespace Atv1Astrologia
 {
     public class Program
@@ -12,6 +15,10 @@ namespace Atv1Astrologia
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddDbContext<ZodiacContext>(opt =>
+            opt.UseInMemoryDatabase("ZodiacBD"));
+
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
