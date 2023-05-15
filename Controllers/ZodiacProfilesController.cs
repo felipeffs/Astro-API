@@ -22,24 +22,24 @@ namespace Atv1Astrologia.Controllers
 
         // GET: api/ZodiacProfiles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ZodiacProfile>>> GetZodiacProfiles()
+        public async Task<ActionResult<IEnumerable<ZodiacProfile>>> GetZodiacProfileItens()
         {
-          if (_context.ZodiacProfiles == null)
+          if (_context.ZodiacProfileItens == null)
           {
               return NotFound();
           }
-            return await _context.ZodiacProfiles.ToListAsync();
+            return await _context.ZodiacProfileItens.ToListAsync();
         }
 
         // GET: api/ZodiacProfiles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ZodiacProfile>> GetZodiacProfile(int id)
         {
-          if (_context.ZodiacProfiles == null)
+          if (_context.ZodiacProfileItens == null)
           {
               return NotFound();
           }
-            var zodiacProfile = await _context.ZodiacProfiles.FindAsync(id);
+            var zodiacProfile = await _context.ZodiacProfileItens.FindAsync(id);
 
             if (zodiacProfile == null)
             {
@@ -85,11 +85,11 @@ namespace Atv1Astrologia.Controllers
         [HttpPost]
         public async Task<ActionResult<ZodiacProfile>> PostZodiacProfile(ZodiacProfile zodiacProfile)
         {
-          if (_context.ZodiacProfiles == null)
+          if (_context.ZodiacProfileItens == null)
           {
-              return Problem("Entity set 'ZodiacProfileContext.ZodiacProfiles'  is null.");
+              return Problem("Entity set 'ZodiacProfileContext.ZodiacProfileItens'  is null.");
           }
-            _context.ZodiacProfiles.Add(zodiacProfile);
+            _context.ZodiacProfileItens.Add(zodiacProfile);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetZodiacProfile", new { id = zodiacProfile.Id }, zodiacProfile);
@@ -99,17 +99,17 @@ namespace Atv1Astrologia.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteZodiacProfile(int id)
         {
-            if (_context.ZodiacProfiles == null)
+            if (_context.ZodiacProfileItens == null)
             {
                 return NotFound();
             }
-            var zodiacProfile = await _context.ZodiacProfiles.FindAsync(id);
+            var zodiacProfile = await _context.ZodiacProfileItens.FindAsync(id);
             if (zodiacProfile == null)
             {
                 return NotFound();
             }
 
-            _context.ZodiacProfiles.Remove(zodiacProfile);
+            _context.ZodiacProfileItens.Remove(zodiacProfile);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -117,7 +117,7 @@ namespace Atv1Astrologia.Controllers
 
         private bool ZodiacProfileExists(int id)
         {
-            return (_context.ZodiacProfiles?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.ZodiacProfileItens?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

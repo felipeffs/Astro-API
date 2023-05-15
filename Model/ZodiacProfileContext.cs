@@ -6,6 +6,6 @@ namespace Atv1Astrologia.Model
     {
         public ZodiacProfileContext(DbContextOptions<ZodiacProfileContext>
 options) : base(options) { }
-        public DbSet<ZodiacProfile> ZodiacProfiles { get; set; } = null!;
+        public DbSet<ZodiacProfile> ZodiacProfileItens { get; set; } = null!;
     }
 }
