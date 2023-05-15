@@ -1,20 +1,18 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-
-namespace Atv1Astrologia.Model
+﻿namespace Atv1Astrologia.Model
 {
     public class ZodiacProfile
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
         public ZodiacSign Sign { get; set; }
-        public string ColorOfDay => AllZodiac.Instance.Info[Sign].colorDay;
+        public string SignName => Sign.ToString();
+        public string ColorOfDay => HoroscopeManager.Instance.Info[Sign].colorDay;
+        public string Drink => HoroscopeManager.Instance.Info[Sign].drink;
+        public int Number => HoroscopeManager.Instance.Info[Sign].number;
     }
 
-    public class AllZodiac : Singleton<AllZodiac>
+    public class HoroscopeManager : Singleton<HoroscopeManager>
     {
         private readonly string[] color = new string[]{
             "Abóbora",
@@ -87,50 +85,54 @@ namespace Atv1Astrologia.Model
             "Vinho",
             "Violeta"
             };
+        private readonly string[] drinks = new string[]
+        {
+            "Conhaque",
+            "Rum",
+            "Uísque",
+            "Lícor de Chocolate",
+            "Lícor 96%",
+            "Lícor de Maracuja",
+            "Cachaça",
+            "Vodka"
+        };
 
-        public Dictionary<ZodiacSign, CaptureInfo> Info = new Dictionary<ZodiacSign, CaptureInfo>();
+        public Dictionary<ZodiacSign, SignData> Info = new Dictionary<ZodiacSign, SignData>();
 
         protected override void SingletonAwake()
         {
             foreach (var sign in Enum.GetValues(typeof(ZodiacSign)))
             {
                 Random random = new Random();
-                int colorNumber = random.Next(0, color.Length);
-                string tempColor = color[colorNumber];
-                CaptureInfo cp = new CaptureInfo(tempColor);
+                int number = random.Next(0, color.Length);
+                string tempColor = color[number];
 
-                Info.Add((ZodiacSign)sign, cp);
+                number = random.Next(0, drinks.Length);
+                string tempDrink = drinks[number];
+
+                int tempNumber = random.Next(1, 100);
+
+                SignData sd = new SignData(tempColor, tempDrink, tempNumber);
+
+                Info.Add((ZodiacSign)sign, sd);
             }
         }
 
     }
 
-    public struct CaptureInfo
+    public struct SignData
     {
         public string colorDay;
+        public string drink;
+        public int number;
 
-        public CaptureInfo(string colorDay)
+        public SignData(string colorDay, string drink, int number)
         {
             this.colorDay = colorDay;
+            this.drink = drink;
+            this.number = number;
         }
     }
-
-    public abstract class Singleton<T> where T : class, new()
-    {
-        private static readonly Lazy<T> _instance = new Lazy<T>(() => new T());
-
-        public static T Instance { get { return _instance.Value; } }
-
-        protected Singleton()
-        {
-            SingletonAwake();
-        }
-
-        protected virtual void SingletonAwake() { }
-
-    }
-
-
 
     public enum ZodiacSign
     {
