@@ -49,6 +49,17 @@ namespace Atv1Astrologia.Controllers
             return zodiacProfile;
         }
 
+        // GET: api/ZodiacProfiles/5/SignData
+        [HttpGet("{id}/SignData")]
+        public ActionResult<SignData> GetSignData(int id)
+        {
+            var signData = _context.ZodiacProfileItens.Find(id)?.SignData;
+
+            if(signData == null) return NotFound();
+
+            return signData;
+        }
+
         // PUT: api/ZodiacProfiles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -83,12 +94,16 @@ namespace Atv1Astrologia.Controllers
         // POST: api/ZodiacProfiles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ZodiacProfile>> PostZodiacProfile(ZodiacProfile zodiacProfile)
+        public async Task<ActionResult<ZodiacProfile>> PostZodiacProfile(ZodiacProfilePostModel zodiacProfilePostModel)
         {
-          if (_context.ZodiacProfileItens == null)
-          {
-              return Problem("Entity set 'ZodiacProfileContext.ZodiacProfileItens'  is null.");
-          }
+            var zodiacProfile = new ZodiacProfile
+            {
+                Id = zodiacProfilePostModel.Id,
+                Name = zodiacProfilePostModel.Name,
+                Description = zodiacProfilePostModel.Description,
+                Sign = zodiacProfilePostModel.Sign
+            };
+
             _context.ZodiacProfileItens.Add(zodiacProfile);
             await _context.SaveChangesAsync();
 

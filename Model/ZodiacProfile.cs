@@ -1,15 +1,24 @@
-﻿namespace Atv1Astrologia.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Atv1Astrologia.Model
 {
     public class ZodiacProfile
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = "";
         public ZodiacSign Sign { get; set; }
         public string SignName => Sign.ToString();
-        public string ColorOfDay => HoroscopeManager.Instance.Info[Sign].colorDay;
-        public string Drink => HoroscopeManager.Instance.Info[Sign].drink;
-        public int Number => HoroscopeManager.Instance.Info[Sign].number;
+        public SignData SignData => HoroscopeManager.Instance.Info[Sign];
+
+    }
+
+    public class ZodiacProfilePostModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = "";
+        public ZodiacSign Sign { get; set; }
     }
 
     public class HoroscopeManager : Singleton<HoroscopeManager>
@@ -122,17 +131,24 @@
 
     public struct SignData
     {
-        public string colorDay;
-        public string drink;
-        public int number;
+        [JsonPropertyName("colorDay")]
+        public string ColorDay { get; set; }
+
+        [JsonPropertyName("drink")]
+        public string Drink { get; set; }
+
+        [JsonPropertyName("number")]
+        public int Number { get; set; }
 
         public SignData(string colorDay, string drink, int number)
         {
-            this.colorDay = colorDay;
-            this.drink = drink;
-            this.number = number;
+           ColorDay = colorDay;
+           Drink = drink;
+           Number = number;
         }
+
     }
+
 
     public enum ZodiacSign
     {
