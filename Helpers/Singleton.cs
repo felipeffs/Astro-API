@@ -1,4 +1,4 @@
-﻿namespace Atv1Astrologia.Model
+﻿namespace Atv1Astrologia.Helpers
 {
     public abstract class Singleton<T> where T : class, new()
     {

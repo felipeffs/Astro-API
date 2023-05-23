@@ -8,6 +8,9 @@ namespace Atv1Astrologia
     {
         public static void Main(string[] args)
         {
+            // Initializes the HoroscopeManager instance
+            HoroscopeManager.Instance.Initialize();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
