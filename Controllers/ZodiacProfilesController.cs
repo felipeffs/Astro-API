@@ -49,6 +49,24 @@ namespace Atv1Astrologia.Controllers
             return zodiacProfile;
         }
 
+        // GET LOGIN
+        [HttpGet("Login/{name}/{password}")]
+        public async Task<ActionResult<ZodiacProfile>> Login(string name, string password)
+        {
+            if (_context.ZodiacProfileItens == null)
+            {
+                return NotFound("Não tem usuários na base kkk");
+            }
+            var zodiacProfile = await _context.ZodiacProfileItens.FirstOrDefaultAsync(c => c.Name == name && c.Password == password);
+
+            if (zodiacProfile == null)
+            {
+                return NotFound("Nome ou senha incorreto!");
+            }
+
+            return zodiacProfile;
+        }
+
         // GET: api/ZodiacProfiles/5/SignData
         [HttpGet("{id}/SignData")]
         public ActionResult<SignData> GetSignData(int id)
@@ -100,8 +118,10 @@ namespace Atv1Astrologia.Controllers
             {
                 Id = zodiacProfilePostModel.Id,
                 Name = zodiacProfilePostModel.Name,
+                Password = zodiacProfilePostModel.Password,
                 Description = zodiacProfilePostModel.Description,
-                Sign = zodiacProfilePostModel.Sign
+                BirthDate = zodiacProfilePostModel.BirthDate,
+                Membership = zodiacProfilePostModel.Membership
             };
 
             _context.ZodiacProfileItens.Add(zodiacProfile);

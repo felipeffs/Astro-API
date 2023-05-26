@@ -75,6 +75,7 @@ namespace Atv1Astrologia.Model
             "Vinho",
             "Violeta"
             };
+
         private readonly string[] drinks = new string[]
         {
             "Conhaque",
@@ -84,7 +85,51 @@ namespace Atv1Astrologia.Model
             "Lícor 96%",
             "Lícor de Maracuja",
             "Cachaça",
-            "Vodka"
+            "Vodka",
+            "Cerveja",
+            "Caipirinha",
+            "Caipivodka",
+            "Cachaça da roça"
+        };
+
+        private readonly string[] element = new string[]
+        {
+            "Fogo",
+            "Água",
+            "Terra",
+            "Madeira",
+            "Vento",
+            "Metal",
+            "Luz",
+            "Gelo",
+            "Elétrico",
+            "Normal"
+        };
+
+        private readonly string[] flower = new string[]
+        {
+            "Tulipa",
+            "Margarida",
+            "Girasol",
+            "Rosas",
+            "Violeta",
+            "Copo de Leite",
+            "Orquídeas",
+            "Gardênias",
+            "Delfino",
+            "Agerato",
+            "Rosa"
+        };
+
+        private readonly string[] love = new string[]
+        {
+            "Boa sorte",
+            "Pode dar certo",
+            "Ferrou! Vai dar tudo errado",
+            "Você é corno(a)",
+            "Vai dar casamento",
+            "Vai achar o amor da sua vida",
+            "Má sorte"
         };
 
         public Dictionary<ZodiacSign, SignData> Info = new Dictionary<ZodiacSign, SignData>();
@@ -100,9 +145,18 @@ namespace Atv1Astrologia.Model
                 number = random.Next(0, drinks.Length);
                 string tempDrink = drinks[number];
 
+                number = random.Next(0, element.Length);
+                string tempElement = element[number];
+
+                number = random.Next(0, flower.Length);
+                string tempFlower = flower[number];
+
+                number = random.Next(0, love.Length);
+                string tempLove = love[number];
+
                 int tempNumber = random.Next(1, 100);
 
-                SignData sd = new SignData(tempColor, tempDrink, tempNumber);
+                SignData sd = new SignData(tempColor, tempDrink, tempNumber, tempElement, tempFlower, tempLove);
 
                 Info.Add((ZodiacSign)sign, sd);
             }
